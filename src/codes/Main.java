@@ -20,16 +20,15 @@ public class Main {
 		player1.setAIToken(3);
 		player2.setAIToken(4);
 		
-		slots.setSlots(1, 5, player2.getToken());
-		slots.setSlots(2, 5, player1.getToken());
-		slots.setSlots(1, 4, player1.getToken());
-		slots.setSlots(2, 4, player2.getToken());
-		slots.setSlots(3, 4, player1.getToken());
+		slots.setSlots(0, 0, player1.getToken());
+		slots.setSlots(0, 1, player2.getToken());
+		slots.setSlots(0, 2, player1.getToken());
+		slots.setSlots(0, 3, player1.getToken());
 		slots.setSlots(1, 3, player1.getToken());
-		slots.setSlots(2, 3, player2.getToken());
-		slots.setSlots(3, 3, player2.getToken());
-		slots.setSlots(4, 3, player1.getToken());
-		slots.setSlots(0, 6, player2.getAIToken());
+		slots.setSlots(1, 2, player2.getToken());
+		slots.setSlots(1, 1, player1.getToken());
+		slots.setSlots(2, 2, player1.getToken());
+		slots.setSlots(2, 3, player2.getAIToken());
 		
 
 		
@@ -37,8 +36,8 @@ public class Main {
 		
 		if(Board.canOpponentWinNextTurn(slots, player2, player1))
 			System.out.println("Opponent Will Win!");
-		 */
-		
+		 
+		*/
 		
 	}
 

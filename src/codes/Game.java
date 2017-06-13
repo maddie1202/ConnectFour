@@ -118,7 +118,7 @@ public class Game
 			Board slots = new Board(0,rows,columns);
 			
 			Graphics.displayMessage("Enter 1 for 1 player or, 2 for 2 player: ");
-			playerMode = errorTrap(1,2);
+			playerMode = errorTrap(0,2);
 			
 			if(playerMode == 1)
 			{
@@ -130,6 +130,12 @@ public class Game
 			{
 				player1.setIsHuman(true);
 				player2.setIsHuman(true);
+			}
+			
+			if(playerMode == 0)
+			{
+				player1.setIsHuman(false);
+				player2.setIsHuman(false);
 			}
 			
 			do
@@ -165,7 +171,7 @@ public class Game
 						column = Player.getMoveAI(slots,player2,player1);
 					
 					row = row(slots,column);
-					
+
 					slots.setSlots(row,column,player2.getToken());
 					
 				}

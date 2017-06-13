@@ -99,7 +99,7 @@ public class Player
 	
 	public static int indexOfHighestNumber(int[] manta)
 	{
-		int highestNumber = 0;//start the higher number at [0] to have something to compare to
+		int highestNumber = -100;//start the higher number at [0] to have something to compare to
 		int highestIndex = 0;
 		
 		for (int a = 0; a < manta.length; a++)
@@ -141,12 +141,14 @@ public class Player
 				counter++;
 			}
 		
-		//System.out.println("Possible Moves: ");
+		/*
+		System.out.println("Possible Moves: ");
 		
-		//for(int a = 0; a < possibleMoves.length; a++)
-			//System.out.print(possibleMoves[a] + " ");
+		for(int a = 0; a < possibleMoves.length; a++)
+			System.out.print(possibleMoves[a] + " ");
 		
-		//System.out.println();
+		System.out.println();
+		*/
 						
 		return possibleMoves;
 	}
@@ -289,8 +291,7 @@ public class Player
 				
 			copy = copyBoard(slots);
 			copy.setSlots(Game.row(copy, column), column, player.getAIToken());
-			Graphics.displaySlots(copy);
-			//System.out.println("Open Row: " + Game.row(copy, column));
+			//Graphics.displaySlots(copy);
 			scores[column] = evaluateMove(copy,column,player,opponent);
 			//System.out.println("Row: " + Game.row(copy,column) + " Column: " + column + " Value: " + copy.getSlots(Game.row(copy,column), column));
 		}

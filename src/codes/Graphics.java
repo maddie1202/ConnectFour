@@ -17,7 +17,15 @@ public class Graphics
 		for(int a = slots.getRows()-1; a >= 0; a--)
 		{		
 			for(int b = 0; b < slots.getColumns(); b++)
-				System.out.print(slots.getSlots(a, b) + " ");
+			{
+				if(slots.getSlots(a, b) == 1)
+					System.out.print("*" + " ");
+				else if (slots.getSlots(a, b) == 2)
+					System.out.print("^" + " ");
+				else if (slots.getSlots(a, b) == 0)
+					System.out.print("~" + " ");
+			}
+				//System.out.print(slots.getSlots(a, b) + " ");
 			
 			System.out.println();
 		}

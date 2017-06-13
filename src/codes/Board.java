@@ -286,15 +286,25 @@ public class Board
 				
 			}
 		
-		for (int row = 1; row < 3; row++)
+		for (int row = 0; row < 3; row++)
 			for (int column = 0; column < 4; column++)
 			{	
 				for(int concecutive = 0; concecutive < numberOfConcecutivePieces; concecutive++)
 				{
 					if(copy.getSlots(row+concecutive, column+concecutive) == opponent.getToken())
 						opponentPiece++;
-					else if(copy.getSlots(row+concecutive-1, column+concecutive) == player.getAIToken())
-						openPiece++;
+					
+					try
+					{
+						if(copy.getSlots(row+concecutive-1, column+concecutive) == player.getAIToken())
+							openPiece++;
+					}
+					
+					catch (Exception e)
+					{
+						continue;
+					}
+					
 				}
 
 				
@@ -305,17 +315,25 @@ public class Board
 				openPiece = 0;
 			}
 		
-		for (int row = 1; row < 3; row++)
+		for (int row = 0; row < 3; row++)
 			for (int column = copy.getColumns()-1; column >= 3; column--)
 			{	
 				for(int concecutive = 0; concecutive < numberOfConcecutivePieces; concecutive++)
 				{
 					if(copy.getSlots(row+concecutive, column-concecutive) == opponent.getToken())
 						opponentPiece++;
-					else if(copy.getSlots(row+concecutive-1, column-concecutive) == player.getAIToken())
-						openPiece++;
+					try
+					{
+						if(copy.getSlots(row+concecutive-1, column-concecutive) == player.getAIToken())
+							openPiece++;
+					}
+					
+					catch (Exception e)
+					{
+						continue;
+					}
+					
 				}
-
 				
 				if(opponentPiece == 3 && openPiece ==1)
 					return true;
