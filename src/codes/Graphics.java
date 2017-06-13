@@ -23,7 +23,7 @@ public class Graphics
 				else if (slots.getSlots(a, b) == 2)
 					System.out.print("@" + " ");
 				else if (slots.getSlots(a, b) == 0)
-					System.out.print("=-" + " ");
+					System.out.print("-" + " ");
 			}
 				//System.out.print(slots.getSlots(a, b) + " ");
 
