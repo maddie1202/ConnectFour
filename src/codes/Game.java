@@ -66,22 +66,21 @@ public class Game
 		int opponentPieces = 0;
 		int AIPlayerPieces = 0;
 		int AIOpponentPieces = 0;
-		int openPieces = 0;
-		
-		
-		if(Board.pattern(slots, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces,openPieces))
+
+		if(Board.pattern(slots, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces))
 			return true;
 				
 		return false;
 	}
 	
+	//This method determines the lowest open row for a given column
 	public static int row (Board slots, int column)
 	{
 		for(int a = 0; a < slots.getRows(); a++)
 			if(slots.getSlots(a,column) == 0)
 				return a;
 	
-		return -1;
+		return -1;//It returns -1if the column is full
 	}
 	
 	public static int changeTurn (int currentTurn)
@@ -100,13 +99,15 @@ public class Game
 		int rows = 6;
 		int columns = 7;
 		
+		//create players
 		Player player1 = new Player(player1Token,true);
 		Player player2 = new Player(player2Token,true);
 		
+		//set AI tokens
 		player1.setAIToken(3);
 		player2.setAIToken(4);
 		
-		int playerTurn = 1;
+		int playerTurn = 1;//Start game at player 1's turn
 		int column = 0;
 		int row = 0;
 		
@@ -115,24 +116,24 @@ public class Game
 		
 		do
 		{
-			Board slots = new Board(0,rows,columns);
+			Board slots = new Board(0,rows,columns); //Create new Board for every new game
 			
 			Graphics.displayMessage("Enter 1 for 1 player or, 2 for 2 player: ");
 			playerMode = errorTrap(0,2);
 			
-			if(playerMode == 1)
+			if(playerMode == 1) //If 1 player mode, set player 1 to human and player 2 to AI
 			{
 				player1.setIsHuman(true);
 				player2.setIsHuman(false);
 			}
 			
-			if(playerMode == 2)
+			if(playerMode == 2)//If  player mode, set both players to human
 			{
 				player1.setIsHuman(true);
 				player2.setIsHuman(true);
 			}
 			
-			if(playerMode == 0)
+			if(playerMode == 0)//If 0 is entered, set both players to AI
 			{
 				player1.setIsHuman(false);
 				player2.setIsHuman(false);
@@ -148,7 +149,7 @@ public class Game
 				
 				Graphics.displaySlots(slots);
 
-				if(playerTurn == 1)
+				if(playerTurn == 1) 
 				{
 					if(player1.isHuman)
 						column = Player.getMoveHuman(slots);

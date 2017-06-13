@@ -97,7 +97,7 @@ public class Player
 		return highesNumber;
 	}
 	
-	public static int indexOfHighestNumber(int[] manta)
+	public static int indexOfHighestNumber(int[] manta) //Returns the index of the highest number
 	{
 		int highestNumber = -100;//start the higher number at [0] to have something to compare to
 		int highestIndex = 0;
@@ -115,7 +115,7 @@ public class Player
 		return highestIndex;
 	}
 	
-	public static int duplicateHighestNumber(int[] scores)
+	public static int duplicateHighestNumber(int[] scores) //Returns the number of duplicate highest numbers
 	{
 		int highestNumber = highestNumber(scores);
 		int count = 0;
@@ -127,7 +127,7 @@ public class Player
 		return count;
 	}
 	
-	public static int[] possibleMoves(int[] scores, int numberOfPossibleMoves)
+	public static int[] possibleMoves(int[] scores, int numberOfPossibleMoves) // returns an array of the indexes of the best moves
 	{
 		int[] possibleMoves = new int [numberOfPossibleMoves];
 		int highestNumber = highestNumber(scores);
@@ -155,15 +155,15 @@ public class Player
 	
 	public static int bestMove(int[] scores)
 	{
-		int bestMoves = duplicateHighestNumber(scores);
+		int bestMoves = duplicateHighestNumber(scores); //Calculates the number of best moves (if there are duplicates in the scores array)
 		//System.out.println("Best moves: " + bestMoves);
 		int bestMove = 0;
 		int random;
 		
-		if(bestMoves == 1)
+		if(bestMoves == 1) //If there's only one best move, return the highest number
 			bestMove = indexOfHighestNumber(scores);
 		
-		else
+		else //If there's more than one best move, chose one randomly 
 		{
 			random = randomNumberGenerator(0,bestMoves-1);
 			//System.out.println("Random: " + random);
@@ -176,7 +176,8 @@ public class Player
 			
 	}
 	
-	public static Board copyBoard(Board original)
+	public static Board copyBoard(Board original) //Creates a copy of the given board
+	//Is also used for reseting the copied board
 	{
 		Board copy = new Board (0,original.getRows(), original.getColumns());
 		
@@ -187,15 +188,16 @@ public class Player
 		return copy;
 	}
 	
+	//The following methods look for patterns in the board, and returns true if they find them
+	
 	public static boolean canWinThisTurn(Board copy,Player player,Player opponent)
 	{
 		int playerPieces = 3;
 		int opponentPieces = 0;
 		int AIPlayerPieces = 1;
 		int AIOpponentPieces = 0;
-		int openPieces = 0;
 		
-		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces,openPieces))
+		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces))
 			return true;
 		
 		return false;
@@ -208,24 +210,8 @@ public class Player
 		int opponentPieces = 3;
 		int AIPlayerPieces = 1;
 		int AIOpponentPieces = 0;
-		int openPieces = 0;
 		
-		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces,openPieces))
-			return true;
-		
-		return false;
-	}
-	
-	
-	public static boolean canOpponentWinNextTurn(Board copy, Player player, Player opponent)
-	{
-		int playerPieces = 0;
-		int opponentPieces = 3;
-		int AIPlayerPieces = 0;
-		int AIOpponentPieces = 0;
-		int openPieces = 1;
-		
-		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces,openPieces))
+		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces))
 			return true;
 		
 		return false;
@@ -237,9 +223,8 @@ public class Player
 		int opponentPieces = 2;
 		int AIPlayerPieces = 1;
 		int AIOpponentPieces = 0;
-		int openPieces = 0;
 		
-		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces,openPieces))
+		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces))
 			return true;
 		
 		return false;
@@ -251,9 +236,8 @@ public class Player
 		int opponentPieces = 0;
 		int AIPlayerPieces = 1;
 		int AIOpponentPieces = 0;
-		int openPieces = 0;
 		
-		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces,openPieces))
+		if(Board.pattern(copy, player, opponent, playerPieces, opponentPieces, AIPlayerPieces, AIOpponentPieces))
 			return true;
 		
 		return false;
@@ -285,15 +269,14 @@ public class Player
 		{
 			if(Game.row(slots, column) == -1)//if the column is full
 			{
-				scores[column] = -11;
+				scores[column] = -10;
 				continue;
 			}
 				
-			copy = copyBoard(slots);
-			copy.setSlots(Game.row(copy, column), column, player.getAIToken());
+			copy = copyBoard(slots);  //Reset the copied board
+			copy.setSlots(Game.row(copy, column), column, player.getAIToken()); //Place AI piece in the current column
 			//Graphics.displaySlots(copy);
-			scores[column] = evaluateMove(copy,column,player,opponent);
-			//System.out.println("Row: " + Game.row(copy,column) + " Column: " + column + " Value: " + copy.getSlots(Game.row(copy,column), column));
+			scores[column] = evaluateMove(copy,column,player,opponent); //Give current column a score to compare with other possible columns
 		}
 		
 		System.out.println();
@@ -304,7 +287,8 @@ public class Player
 		
 		System.out.println();
 			
-		return bestMove(scores);
+		return bestMove(scores); //Returns the highest score(the best possible move)
+		//If there are two moves with the same score, it choses randomly
 	}
 	
 	public static int getMoveHuman(Board slots)
@@ -314,13 +298,13 @@ public class Player
 		
 		do
 		{
-			column = errorTrap(1,7) - 1;
+			column = errorTrap(1,7) - 1; // -1 because the board array starts at 0 and ends at 6 and it's easier for the user to understand 1 to 7
 			row = Game.row(slots,column);
 			
-			if(row == -1)
+			if(row == -1) //meaning the column is full
 				Graphics.displayMessage("This column is full, pick another one.");
 			
-		}while(row == -1);
+		}while(row == -1);//Try again if the row is full
 		
 		return column;
 	}
